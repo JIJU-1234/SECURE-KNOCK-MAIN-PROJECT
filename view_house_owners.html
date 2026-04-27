@@ -1,0 +1,205 @@
+{#{% include 'adminheader.html' %}#}
+{#<br><br><br>#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>Registration Data Table</title>#}
+{#  <!-- Bootstrap CSS -->#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#  <!-- DataTables CSS -->#}
+{#  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">#}
+{#    <style>#}
+{#    body {#}
+{#        background-color: #2E4057;#}
+{#    }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div class="container mt-5">#}
+{#    <h2 class="mb-4">Registered Users</h2>#}
+{#    <table id="registrationTable" class="table table-striped table-bordered">#}
+{#      <thead>#}
+{#        <tr>#}
+{#          <th>SL.No</th>#}
+{#          <th>Name</th>#}
+{#            <th>email</th>#}
+{#             <th>phone</th>#}
+{#          <th>Place</th>#}
+{#          <th>Housename</th>#}
+{#            <th>pin</th>#}
+{#            <th>state</th>#}
+{#            <th>district</th>#}
+{#          <th>Photo</th>#}
+{##}
+{#        </tr>#}
+{#      {% for i in data %}#}
+{#          <tr>#}
+{#          <td>{{ forloop.counter }}</td>#}
+{#          <td>{{ i.name }}</td>#}
+{#          <td>{{ i.email }}</td>#}
+{#          <td>{{ i.phone }}</td>#}
+{#          <td>{{ i.place }}</td>#}
+{#          <td>{{ i.housename }}</td>#}
+{#          <td>{{ i.pin }}</td>#}
+{#          <td>{{ i.state }}</td>#}
+{#          <td>{{ i.district }}</td>#}
+{#          <td><img src="{{ i.photo }}" alt="" width="150" height="150"></td>#}
+{#          </tr>#}
+{#      {% endfor %}#}
+{#      </thead>#}
+{##}
+{#          <td><img src="https://via.placeholder.com/50" class="img-thumbnail" width="50" /></td>#}
+{#        </tr>#}
+{#        <!-- Add more rows dynamically from backend -->#}
+{#      </tbody>#}
+{#    </table>#}
+{##}
+{#  {% for i in messages %}#}
+{#      <span class="text-success d-block text-center mt-3">{{ i }}</span>#}
+{#  {% endfor %}#}
+{#  </div>#}
+{##}
+{#  <!-- Scripts -->#}
+{#  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>#}
+{#  <script>#}
+{#    $(document).ready(function () {#}
+{#      $('#registrationTable').DataTable();#}
+{#    });#}
+{#  </script>#}
+{#</body>#}
+{#</html>#}
+{#<br><br><br>#}
+{##}
+{#{% include 'adminfooter.html' %}#}
+
+
+{% include 'adminheader.html' %}
+<br><br><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registered Users</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #2E4057;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Centered card for table */
+    .table-card {
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 95%;
+      margin: 50px auto;
+      padding: 30px;
+      overflow-x: auto;
+    }
+
+    /* Card heading */
+    .table-card h2 {
+      color: #2E4057;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    /* DataTable header */
+    table.dataTable thead th {
+      background-color: #2E4057;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* DataTable body */
+    table.dataTable tbody td {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    table.dataTable img {
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .message {
+      text-align: center;
+      display: block;
+      margin-top: 20px;
+      font-weight: 500;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="table-card">
+  <h2>House Owners</h2>
+  <table id="registrationTable" class="table table-striped table-bordered nowrap" style="width:100%">
+    <thead>
+      <tr>
+        <th>SL.No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Place</th>
+        <th>Housename</th>
+        <th>Pin</th>
+        <th>State</th>
+        <th>District</th>
+        <th>Photo</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.email }}</td>
+        <td>{{ i.phone }}</td>
+        <td>{{ i.place }}</td>
+        <td>{{ i.housename }}</td>
+        <td>{{ i.pin }}</td>
+        <td>{{ i.state }}</td>
+        <td>{{ i.district }}</td>
+        <td><img src="{{ i.photo }}" alt="photo" width="100" height="100"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% for i in messages %}
+    <span class="message">{{ i }}</span>
+  {% endfor %}
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#registrationTable').DataTable({
+      scrollX: true,  // horizontal scroll if needed
+      responsive: true
+    });
+  });
+</script>
+
+</body>
+</html>
+<br><br><br>
+
+{% include 'adminfooter.html' %}
+
