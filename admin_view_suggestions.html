@@ -1,0 +1,165 @@
+{#{% include 'adminheader.html' %}#}
+{#<br><br><br>#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>Registration Data Table</title>#}
+{#  <!-- Bootstrap CSS -->#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#  <!-- DataTables CSS -->#}
+{#  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">#}
+{##}
+{#    <style>#}
+{#    body {#}
+{#        background-color: #2E4057;#}
+{#    }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#  <div class="container mt-5">#}
+{#    <h2 class="mb-4">Registered Users</h2>#}
+{#    <table id="registrationTable" class="table table-striped table-bordered">#}
+{#      <thead>#}
+{#        <tr>#}
+{#          <th>SL.No</th>#}
+{#          <th>Suggestion</th>#}
+{#            <th>Date</th>#}
+{#             <th>HouseOwner name</th>#}
+{#        </tr>#}
+{#      {% for i in data %}#}
+{#          <tr>#}
+{#          <td>{{ forloop.counter }}</td>#}
+{#          <td>{{ i.suggestion }}</td>#}
+{#          <td>{{ i.date }}</td>#}
+{#          <td>{{ i.HOUSEOWNER.name }}</td>#}
+{##}
+{#          </tr>#}
+{#      {% endfor %}#}
+{#      </thead>#}
+{##}
+{#          <td><img src="https://via.placeholder.com/50" class="img-thumbnail" width="50" /></td>#}
+{#        </tr>#}
+{#        <!-- Add more rows dynamically from backend -->#}
+{#      </tbody>#}
+{#    </table>#}
+{##}
+{#  {% for i in messages %}#}
+{#      <span class="text-success d-block text-center mt-3">{{ i }}</span>#}
+{#  {% endfor %}#}
+{#  </div>#}
+{##}
+{#  <!-- Scripts -->#}
+{#  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>#}
+{#  <script>#}
+{#    $(document).ready(function () {#}
+{#      $('#registrationTable').DataTable();#}
+{#    });#}
+{#  </script>#}
+{#</body>#}
+{#</html>#}
+{#<br><br><br>#}
+{##}
+{#{% include 'adminfooter.html' %}#}
+{% include 'adminheader.html' %}
+<br><br><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Suggestions</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+  <style>
+    /* Background color */
+    body {
+      background-color: #2E4057;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* White card container */
+    .table-card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 1200px;   /* card width */
+      margin: 40px auto;
+    }
+
+    .table-card h2 {
+      color: #2E4057;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    /* Table heading colors */
+    table.dataTable thead th {
+      background-color: #2E4057;
+      color: #fff;
+      text-align: center;
+    }
+
+    table.dataTable tbody td {
+      text-align: center;
+    }
+
+    /* Success message */
+    .text-success {
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Card Wrapper -->
+<div class="table-card">
+  <h2>Registered Users - Suggestions</h2>
+  <table id="registrationTable" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>SL.No</th>
+        <th>Suggestion</th>
+        <th>Date</th>
+        <th>HouseOwner Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.suggestions }}</td>
+          <td>{{ i.date }}</td>
+          <td>{{ i.HOUSEOWNER.name }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% for i in messages %}
+    <span class="text-success d-block text-center mt-3">{{ i }}</span>
+  {% endfor %}
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#registrationTable').DataTable();
+  });
+</script>
+</body>
+</html>
+<br><br><br>
+
+{% include 'adminfooter.html' %}
