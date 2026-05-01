@@ -1,0 +1,122 @@
+{% include 'policeheader.html' %}
+<br><br><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registered Users</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #2E4057;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+    }
+
+    .card-container {
+      background-color: #ffffff;
+      color: #2E4057;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      max-width: 1000px;
+      margin: 40px auto;
+      overflow-x: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    /* Table header design */
+    table.dataTable thead th {
+      background-color: #1B2631 !important; /* dark header */
+      color: #ffffff !important;           /* white text */
+      text-align: center;                   /* center content */
+      font-weight: 600;
+      cursor: default;                      /* remove pointer */
+    }
+
+    /* Remove sorting arrows */
+    table.dataTable thead .sorting,
+    table.dataTable thead .sorting_asc,
+    table.dataTable thead .sorting_desc {
+      background-image: none !important;
+    }
+
+    /* Table body cells */
+    table.dataTable tbody td {
+      vertical-align: middle;
+      text-align: center;  /* center content */
+    }
+
+    /* Hover effect */
+    table.dataTable tbody tr:hover {
+      background-color: #f1f1f1;
+      color: #2E4057;
+    }
+
+    .message {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 500;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card-container">
+  <h2>Detected Criminals</h2>
+  <table id="registrationTable" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>SL.No</th>
+        <th>Image</th>
+        <th>Date</th>
+        <th>Criminal Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+
+        <td><img src="{{ i.image }}" alt="Criminal Image" width="100" height="100"></td>
+        <td>{{ i.date }}</td>
+     <td>{{ i.CRIMINAL.name|default:"unknown" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% for i in messages %}
+    <span class="message">{{ i }}</span>
+  {% endfor %}
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#registrationTable').DataTable({
+      "pageLength": 10,
+      "ordering": false // disable sorting arrows
+    });
+  });
+</script>
+</body>
+</html>
+
+<br><br><br>
+
+{% include 'policefooter.html' %}
