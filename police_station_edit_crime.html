@@ -1,0 +1,411 @@
+
+
+{#{% include 'policeheader.html' %}#}
+{#<br><br><br>#}
+{##}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>Edit Crime</title>#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#  <style>#}
+{#    body {#}
+{#      background-color: #2E4057;#}
+{#      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;#}
+{#    }#}
+{##}
+{#    .form-card {#}
+{#      background-color: #ffffff;#}
+{#      max-width: 600px;#}
+{#      margin: 40px auto;#}
+{#      padding: 30px 25px;#}
+{#      border-radius: 15px;#}
+{#      box-shadow: 0 8px 20px rgba(0,0,0,0.2);#}
+{#    }#}
+{##}
+{#    .form-card h2 {#}
+{#      text-align: center;#}
+{#      color: #2E4057;#}
+{#      margin-bottom: 25px;#}
+{#      font-weight: 600;#}
+{#    }#}
+{##}
+{#    .form-card input.form-control {#}
+{#      margin-bottom: 5px;#}
+{#      border-radius: 10px;#}
+{#      padding: 10px;#}
+{#    }#}
+{##}
+{#    .update-btn {#}
+{#      background-color: darkred;#}
+{#      color: #fff;#}
+{#      border: none;#}
+{#      padding: 12px 25px;#}
+{#      border-radius: 10px;#}
+{#      font-size: 16px;#}
+{#      cursor: pointer;#}
+{#      display: block;#}
+{#      margin: 0 auto;#}
+{#      transition: 0.3s;#}
+{#    }#}
+{##}
+{#    .update-btn:hover {#}
+{#      opacity: 0.85;#}
+{#    }#}
+{##}
+{#    .message {#}
+{#      display: block;#}
+{#      text-align: center;#}
+{#      margin-top: 15px;#}
+{#      font-weight: 500;#}
+{#      color: green;#}
+{#    }#}
+{##}
+{#    .error-msg {#}
+{#      color: red;#}
+{#      font-size: 14px;#}
+{#      display: block;#}
+{#      margin-top: -2px;#}
+{#      margin-bottom: 8px;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="form-card">#}
+{#    <h2>Edit Crime</h2>#}
+{#    <form id="editCrimeForm" method="POST" action="/myapp/police_station_edit_crime_post/">#}
+{#        {% csrf_token %}#}
+{#        <input type="hidden" name="cid" value="{{ data.id }}">#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <label class="col-sm-4 col-form-label">Crime type</label>#}
+{#          <div class="col-sm-8">#}
+{#            <input type="text" class="form-control" id="crime_type" name="crime_type" value="{{ data.crime_type }}" required>#}
+{#            <span class="error-msg" id="crimeTypeError"></span>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <label class="col-sm-4 col-form-label">IPC</label>#}
+{#          <div class="col-sm-8">#}
+{#            <input type="text" class="form-control" id="ipc" name="ipc" value="{{ data.IPC }}" required>#}
+{#            <span class="error-msg" id="ipcError"></span>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <label class="col-sm-4 col-form-label">Victim Demographics</label>#}
+{#          <div class="col-sm-8">#}
+{#            <input type="text" class="form-control" id="victim_demographics" name="victim_demographics" value="{{ data.victim_demographics }}" required>#}
+{#            <span class="error-msg" id="victimError"></span>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <label class="col-sm-4 col-form-label">Juvenile Justice</label>#}
+{#          <div class="col-sm-8">#}
+{#            <input type="text" class="form-control" id="juvenile_justice" name="juvenile_justice" value="{{ data.juvenile_justice }}" required>#}
+{#            <span class="error-msg" id="juvenileError"></span>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row mb-3">#}
+{#          <label class="col-sm-4 col-form-label">Location Data</label>#}
+{#          <div class="col-sm-8">#}
+{#            <input type="text" class="form-control" id="location_data" name="location_data" value="{{ data.location_data }}" required>#}
+{#            <span class="error-msg" id="locationError"></span>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <button type="submit" class="update-btn">Update</button>#}
+{#    </form>#}
+{##}
+{#    {% for i in messages %}#}
+{#        <span class="message">{{ i }}</span>#}
+{#    {% endfor %}#}
+{#</div>#}
+{##}
+{#<script>#}
+{#// Validation patterns#}
+{#const lettersSpaces = /^[a-z ]+$/;#}
+{#const capitalLettersSpaces = /^[a-z]*$/;#}
+{#const numbersOnly = /^\d+$/;#}
+{##}
+{#// Live validation#}
+{#document.getElementById('crime_type').addEventListener('input', function(){#}
+{#  const val=this.value.trim();#}
+{#  document.getElementById('crimeTypeError').textContent =#}
+{#    capitalLettersSpaces.test(val)? '' : 'Start with capital letter, letters & spaces only';#}
+{#});#}
+{##}
+{#document.getElementById('ipc').addEventListener('input', function(){#}
+{#  const val=this.value.trim();#}
+{#  document.getElementById('ipcError').textContent =#}
+{#    numbersOnly.test(val)? '' : 'Numbers only';#}
+{#});#}
+{##}
+{#document.getElementById('victim_demographics').addEventListener('input', function(){#}
+{#  const val=this.value.trim();#}
+{#  document.getElementById('victimError').textContent =#}
+{#    lettersSpaces.test(val)? '' : 'Letters & spaces only';#}
+{#});#}
+{##}
+{#document.getElementById('juvenile_justice').addEventListener('input', function(){#}
+{#  const val=this.value.trim();#}
+{#  document.getElementById('juvenileError').textContent =#}
+{#    lettersSpaces.test(val)? '' : 'Letters & spaces only';#}
+{#});#}
+{##}
+{#document.getElementById('location_data').addEventListener('input', function(){#}
+{#  const val=this.value.trim();#}
+{#  document.getElementById('locationError').textContent =#}
+{#    lettersSpaces.test(val)? '' : 'Letters & spaces only';#}
+{#});#}
+{##}
+{#// Submit validation#}
+{#document.getElementById('editCrimeForm').addEventListener('submit', function(e){#}
+{#  let valid = true;#}
+{##}
+{#  if(!capitalLettersSpaces.test(document.getElementById('crime_type').value.trim())){#}
+{#    document.getElementById('crimeTypeError').textContent='Start with capital letter, letters & spaces only';#}
+{#    valid=false;#}
+{#  }#}
+{##}
+{#  if(!numbersOnly.test(document.getElementById('ipc').value.trim())){#}
+{#    document.getElementById('ipcError').textContent='Numbers only';#}
+{#    valid=false;#}
+{#  }#}
+{##}
+{#  if(!lettersSpaces.test(document.getElementById('victim_demographics').value.trim())){#}
+{#    document.getElementById('victimError').textContent='Letters & spaces only';#}
+{#    valid=false;#}
+{#  }#}
+{##}
+{#  if(!lettersSpaces.test(document.getElementById('juvenile_justice').value.trim())){#}
+{#    document.getElementById('juvenileError').textContent='Letters & spaces only';#}
+{#    valid=false;#}
+{#  }#}
+{##}
+{#  if(!lettersSpaces.test(document.getElementById('location_data').value.trim())){#}
+{#    document.getElementById('locationError').textContent='Letters & spaces only';#}
+{#    valid=false;#}
+{#  }#}
+{##}
+{#  if(!valid) e.preventDefault();#}
+{#});#}
+{#</script>#}
+{##}
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>#}
+{#</body>#}
+{#</html>#}
+{##}
+{#<br><br><br>#}
+{#{% include 'policefooter.html' %}#}
+{##}
+
+
+{% include 'policeheader.html' %}
+<br><br><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Crime</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #2E4057;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-card {
+      background-color: #ffffff;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .form-card h2 {
+      text-align: center;
+      color: #2E4057;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .form-card input.form-control {
+      margin-bottom: 5px;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .update-btn {
+      background-color: darkred;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      transition: 0.3s;
+    }
+
+    .update-btn:hover {
+      opacity: 0.85;
+    }
+
+    .message {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 500;
+      color: green;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 14px;
+      display: block;
+      margin-top: -2px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-card">
+    <h2>Edit Crime</h2>
+    <form id="editCrimeForm" method="POST" action="/myapp/police_station_edit_crime_post/">
+        {% csrf_token %}
+        <input type="hidden" name="cid" value="{{ data.id }}">
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Crime type</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="crime_type" name="crime_type" value="{{ data.crime_type }}" required>
+            <span class="error-msg" id="crimeTypeError"></span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">IPC</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="ipc" name="ipc" value="{{ data.IPC }}" required>
+            <span class="error-msg" id="ipcError"></span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Victim Demographics</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="victim_demographics" name="victim_demographics" value="{{ data.victim_demographics }}" required>
+            <span class="error-msg" id="victimError"></span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Juvenile Justice</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="juvenile_justice" name="juvenile_justice" value="{{ data.juvenile_justice }}" required>
+            <span class="error-msg" id="juvenileError"></span>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="col-sm-4 col-form-label">Location Data</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="location_data" name="location_data" value="{{ data.location_data }}" required>
+            <span class="error-msg" id="locationError"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="update-btn">Update</button>
+    </form>
+
+    {% for i in messages %}
+        <span class="message">{{ i }}</span>
+    {% endfor %}
+</div>
+
+<script>
+// Validation patterns
+const lettersSpaces = /^[a-zA-Z ]+$/;
+const numbersOnly = /^\d+$/;
+
+// Live validation
+document.getElementById('crime_type').addEventListener('input', function(){
+  const val=this.value.trim();
+  document.getElementById('crimeTypeError').textContent =
+    lettersSpaces.test(val)? '' : 'Letters & spaces only';
+});
+
+document.getElementById('ipc').addEventListener('input', function(){
+  const val=this.value.trim();
+  document.getElementById('ipcError').textContent =
+    numbersOnly.test(val)? '' : 'Numbers only';
+});
+
+document.getElementById('victim_demographics').addEventListener('input', function(){
+  const val=this.value.trim();
+  document.getElementById('victimError').textContent =
+    lettersSpaces.test(val)? '' : 'Letters & spaces only';
+});
+
+document.getElementById('juvenile_justice').addEventListener('input', function(){
+  const val=this.value.trim();
+  document.getElementById('juvenileError').textContent =
+    lettersSpaces.test(val)? '' : 'Letters & spaces only';
+});
+
+document.getElementById('location_data').addEventListener('input', function(){
+  const val=this.value.trim();
+  document.getElementById('locationError').textContent =
+    lettersSpaces.test(val)? '' : 'Letters & spaces only';
+});
+
+// Submit validation
+document.getElementById('editCrimeForm').addEventListener('submit', function(e){
+  let valid = true;
+
+  if(!lettersSpaces.test(document.getElementById('crime_type').value.trim())){
+    document.getElementById('crimeTypeError').textContent='Letters & spaces only';
+    valid=false;
+  }
+
+  if(!numbersOnly.test(document.getElementById('ipc').value.trim())){
+    document.getElementById('ipcError').textContent='Numbers only';
+    valid=false;
+  }
+
+  if(!lettersSpaces.test(document.getElementById('victim_demographics').value.trim())){
+    document.getElementById('victimError').textContent='Letters & spaces only';
+    valid=false;
+  }
+
+  if(!lettersSpaces.test(document.getElementById('juvenile_justice').value.trim())){
+    document.getElementById('juvenileError').textContent='Letters & spaces only';
+    valid=false;
+  }
+
+  if(!lettersSpaces.test(document.getElementById('location_data').value.trim())){
+    document.getElementById('locationError').textContent='Letters & spaces only';
+    valid=false;
+  }
+
+  if(!valid) e.preventDefault();
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<br><br><br>
+{% include 'policefooter.html' %}
+
