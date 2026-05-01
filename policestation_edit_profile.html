@@ -1,0 +1,252 @@
+{% include 'policeheader.html' %}
+<br><br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #2E4057;
+    }
+    .form-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 30px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+    h2 {
+      font-weight: 600;
+      color: #0f6c6b; /* teal color */
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .btn-primary {
+      background-color: #0f6c6b;
+      border-color: #0f6c6b;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .form-label {
+      font-weight: 500;
+    }
+    img.preview {
+      display: block;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    .is-invalid {
+      border-color: red !important;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.875em;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="form-card">
+          <h2>Edit Profile</h2>
+          <form method="POST" action="/myapp/policestation_edit_profile_post/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="pid" value="{{ data.id }}">
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="name" name="name" value="{{ data.name }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Place</label>
+              <input type="text" class="form-control" id="place" name="place" value="{{ data.place }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Post</label>
+              <input type="text" class="form-control" id="post" name="post" value="{{ data.post }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Pin</label>
+              <input type="text" class="form-control" id="pin" name="pin" value="{{ data.pin }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">District</label>
+              <input type="text" class="form-control" id="district" name="district" value="{{ data.district }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">State</label>
+              <input type="text" class="form-control" id="state" name="state" value="{{ data.state }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" value="{{ data.email }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" id="phone" name="phone" value="{{ data.phone }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="photo" class="form-label">Upload Photo</label>
+              <img src="{{ data.photo }}" alt="Current Photo" width="100" height="100" class="preview">
+              <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+            </div>
+
+            <button type="submit" name="submit" class="btn btn-primary">Update Profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form');
+
+  const nameInput = document.getElementById('name');
+  const placeInput = document.getElementById('place');
+  const postInput = document.getElementById('post');
+  const pinInput = document.getElementById('pin');
+  const districtInput = document.getElementById('district');
+  const stateInput = document.getElementById('state');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('phone');
+
+  function showError(input, message) {
+    let error = input.nextElementSibling;
+    if (!error || !error.classList.contains('error-message')) {
+      error = document.createElement('div');
+      error.className = 'error-message';
+      input.parentNode.appendChild(error);
+    }
+    error.textContent = message;
+    input.classList.add('is-invalid');
+  }
+
+  function removeError(input) {
+    let error = input.nextElementSibling;
+    if (error && error.classList.contains('error-message')) {
+      error.textContent = '';
+    }
+    input.classList.remove('is-invalid');
+  }
+
+  function validateName() {
+    const regex = /^[A-Z][a-zA-Z ]*$/;
+    if (!regex.test(nameInput.value.trim())) {
+      showError(nameInput, 'Name must start with a capital letter and contain only letters and spaces.');
+      return false;
+    }
+    removeError(nameInput);
+    return true;
+  }
+
+  function validateEmail() {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(emailInput.value.trim())) {
+      showError(emailInput, 'Enter a valid email address.');
+      return false;
+    }
+    removeError(emailInput);
+    return true;
+  }
+
+  function validatePhone() {
+    const regex = /^\d{10}$/;
+    if (!regex.test(phoneInput.value.trim())) {
+      showError(phoneInput, 'Phone must be exactly 10 digits.');
+      return false;
+    }
+    removeError(phoneInput);
+    return true;
+  }
+
+  function validatePlaceField(input) {
+    const regex = /^[a-zA-Z ]+$/;
+    if (!regex.test(input.value.trim())) {
+      showError(input, 'This field can contain only letters and spaces.');
+      return false;
+    }
+    removeError(input);
+    return true;
+  }
+
+  function validatePin() {
+    const regex = /^\d{6}$/;
+    if (!regex.test(pinInput.value.trim())) {
+      showError(pinInput, 'Pin must be exactly 6 digits.');
+      return false;
+    }
+    removeError(pinInput);
+    return true;
+  }
+
+  // Attach listeners
+  [nameInput, placeInput, postInput, districtInput, stateInput, emailInput, phoneInput, pinInput].forEach(input => {
+    input.addEventListener('blur', () => {
+      switch (input.id) {
+        case 'name': validateName(); break;
+        case 'place':
+        case 'post':
+        case 'district':
+        case 'state': validatePlaceField(input); break;
+        case 'email': validateEmail(); break;
+        case 'phone': validatePhone(); break;
+        case 'pin': validatePin(); break;
+      }
+    });
+
+    input.addEventListener('input', () => {
+      switch (input.id) {
+        case 'name': validateName(); break;
+        case 'place':
+        case 'post':
+        case 'district':
+        case 'state': validatePlaceField(input); break;
+        case 'email': validateEmail(); break;
+        case 'phone': validatePhone(); break;
+        case 'pin': validatePin(); break;
+      }
+    });
+  });
+
+  // Final validation before submit
+  form.addEventListener('submit', (e) => {
+    let valid = true;
+    if (!validateName()) valid = false;
+    if (!validateEmail()) valid = false;
+    if (!validatePhone()) valid = false;
+    if (!validatePin()) valid = false;
+    if (!validatePlaceField(placeInput)) valid = false;
+    if (!validatePlaceField(postInput)) valid = false;
+    if (!validatePlaceField(districtInput)) valid = false;
+    if (!validatePlaceField(stateInput)) valid = false;
+
+    if (!valid) {
+      e.preventDefault();
+    }
+  });
+});
+</script>
+
+
+</body>
+</html>
+
+{% include 'policefooter.html' %}
