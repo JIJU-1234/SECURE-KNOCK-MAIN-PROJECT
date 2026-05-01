@@ -1,0 +1,211 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <title>Registration Data Table</title>#}
+{#  <!-- Bootstrap CSS -->#}
+{#  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#  <!-- DataTables CSS -->#}
+{#  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">#}
+{#</head>#}
+{#<body>#}
+{#  <div class="container mt-5">#}
+{#    <h2 class="mb-4">Profile</h2>#}
+{#    <table id="registrationTable" class="table table-striped table-bordered">#}
+{#      <thead>#}
+{#        <tr>#}
+{#          <th>Name</th>#}
+{#          <th>{{ data.name }}</th>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>Place</th>#}
+{#            <th>{{ data.place }}</th>#}
+{#        </tr>#}
+{#        <tr>#}
+{#            <th>Post</th>#}
+{#            <th>{{ data.post }}</th>#}
+{#        </tr>#}
+{##}
+{#        <tr>#}
+{#            <th>Pin</th>#}
+{#            <th>{{ data.pin }}</th>#}
+{#        </tr>#}
+{##}
+{#        <tr>#}
+{#            <th>District</th>#}
+{#            <th>{{ data.district }}</th>#}
+{#        </tr>#}
+{##}
+{#        <tr>#}
+{#            <th>state</th>#}
+{#            <th>{{ data.state }}</th>#}
+{#        </tr>#}
+{##}
+{#        <tr>#}
+{#            <th>Email</th>#}
+{#            <th>{{ data.email }}</th>#}
+{#        </tr>#}
+{##}
+{#        <tr>#}
+{#            <th>Phone</th>#}
+{#            <th>{{ data.phone }}</th>#}
+{#        </tr>#}
+{##}
+{#        <tr>#}
+{#            <th>Photo</th>#}
+{#            <th><img src="{{ data.photo }}" alt="" width="100" height="100"></th>#}
+{#        </tr>#}
+{##}
+{##}
+{#      </thead>#}
+{##}
+{#          <td><img src="https://via.placeholder.com/50" class="img-thumbnail" width="50" /></td>#}
+{#        </tr>#}
+{#        <!-- Add more rows dynamically from backend -->#}
+{#      </tbody>#}
+{#    </table>#}
+{##}
+{#  {% for i in messages %}#}
+{#      <span class="text-success d-block text-center mt-3">{{ i }}</span>#}
+{#  {% endfor %}#}
+{#  </div>#}
+{##}
+{#  <!-- Scripts -->#}
+{#  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>#}
+{#  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>#}
+{#  <script>#}
+{#    $(document).ready(function () {#}
+{#      $('#registrationTable').DataTable();#}
+{#    });#}
+{#  </script>#}
+{#</body>#}
+{#</html>#}
+{##}
+
+
+{% include 'policeheader.html' %}
+<br><br><br>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #2E4057;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+    }
+
+    .profile-card {
+      background-color: #ffffff;
+      color: #2E4057;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .profile-card img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #2E4057;
+      margin-bottom: 20px;
+    }
+
+    .profile-card h2 {
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .profile-details {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .profile-details div {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    .profile-details div:last-child {
+      border-bottom: none;
+    }
+
+    .profile-details span.label {
+      font-weight: 600;
+      color: #1B2631;
+    }
+
+    .profile-details span.value {
+      color: #2E4057;
+    }
+
+    .message {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 500;
+      color: green;
+    }
+
+    .update-btn {
+      margin-top: 25px;
+      background-color: #2E4057;
+      color: #fff;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .update-btn:hover {
+      background-color: #1B2631;
+    }
+  </style>
+</head>
+<body>
+
+<div class="profile-card">
+  <img src="{{ data.photo }}" alt="Profile Photo">
+  <h2>{{ data.name }}</h2>
+
+  <div class="profile-details">
+    <div><span class="label">Place:</span> <span class="value">{{ data.place }}</span></div>
+    <div><span class="label">Post:</span> <span class="value">{{ data.post }}</span></div>
+    <div><span class="label">Pin:</span> <span class="value">{{ data.pin }}</span></div>
+    <div><span class="label">District:</span> <span class="value">{{ data.district }}</span></div>
+    <div><span class="label">State:</span> <span class="value">{{ data.state }}</span></div>
+    <div><span class="label">Email:</span> <span class="value">{{ data.email }}</span></div>
+    <div><span class="label">Phone:</span> <span class="value">{{ data.phone }}</span></div>
+  </div>
+
+  {% for i in messages %}
+    <span class="message">{{ i }}</span>
+  {% endfor %}
+
+  <a href="/myapp/policestation_edit_profile_get/{{ data.id }}">
+    <button class="update-btn">Update Profile</button>
+  </a>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<br><br><br>
+
+{% include 'policefooter.html' %}
